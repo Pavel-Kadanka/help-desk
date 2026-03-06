@@ -11,12 +11,6 @@ export default defineNuxtConfig({
     plugins: [tailwindcss()],
   },
 
-  nitro: {
-    rollupConfig: {
-      external: ['@prisma/client', '.prisma/client'],
-    },
-  },
-
   runtimeConfig: {
     jwtSecret: process.env.JWT_SECRET || 'dev-secret-change-in-production',
     public: {
