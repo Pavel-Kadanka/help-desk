@@ -1,0 +1,91 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique @db.VarChar(255)
+  passwordHash String   @map("password_hash") @db.VarChar(255)
+  name         String   @db.VarChar(100)
+  role         UserRole @default(user)
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  passwordResetTokens PasswordResetToken[]
+
+  @@map("users")
+}
+
+enum UserRole {
+  user
+  admin
+}
+
+model PasswordResetToken {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  token     String   @unique @db.VarChar(255)
+  expiresAt DateTime @map("expires_at")
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("password_reset_tokens")
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(150)
+  slug      String   @unique @db.VarChar(150)
+  sortOrder Int      @default(0) @map("sort_order")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  topics Topic[]
+
+  @@map("categories")
+}
+
+model Topic {
+  id         Int      @id @default(autoincrement())
+  categoryId Int      @map("category_id")
+  title      String   @db.VarChar(255)
+  slug       String   @unique @db.VarChar(255)
+  content    String   @db.Text
+  summary    String?  @db.VarChar(500)
+  sortOrder  Int      @default(0) @map("sort_order")
+  published  Boolean  @default(true)
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+
+  @@map("topics")
+}
+
+model Deadline {
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(255)
+  description String?  @db.Text
+  dueDate     DateTime @map("due_date") @db.Date
+  sortOrder   Int      @default(0) @map("sort_order")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("deadlines")
+}
+
+model Faq {
+  id        Int      @id @default(autoincrement())
+  question  String   @db.VarChar(500)
+  answer    String   @db.Text
+  sortOrder Int      @default(0) @map("sort_order")
+  published Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("faq")
+}

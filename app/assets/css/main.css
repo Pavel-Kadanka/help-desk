@@ -1,0 +1,59 @@
+@import "tailwindcss";
+@import "highlight.js/styles/github-dark.css";
+
+@theme {
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a8a;
+}
+
+/* Topic content styles */
+.topic-content h2 {
+  @apply text-2xl font-bold mt-8 mb-4 text-gray-900;
+}
+.topic-content h3 {
+  @apply text-xl font-semibold mt-6 mb-3 text-gray-800;
+}
+.topic-content p {
+  @apply mb-4 leading-relaxed text-gray-700;
+}
+.topic-content ul, .topic-content ol {
+  @apply mb-4 pl-6;
+}
+.topic-content ul {
+  @apply list-disc;
+}
+.topic-content ol {
+  @apply list-decimal;
+}
+.topic-content li {
+  @apply mb-2 text-gray-700;
+}
+.topic-content pre {
+  @apply rounded-lg my-4 overflow-x-auto;
+}
+.topic-content code:not(pre code) {
+  @apply bg-gray-100 text-pink-600 px-1.5 py-0.5 rounded text-sm;
+}
+.topic-content img {
+  @apply rounded-lg my-4 max-w-full h-auto;
+}
+.topic-content a {
+  @apply text-primary-600 hover:text-primary-800 underline;
+}
+.topic-content table {
+  @apply w-full border-collapse mb-4;
+}
+.topic-content th, .topic-content td {
+  @apply border border-gray-300 px-4 py-2 text-left;
+}
+.topic-content th {
+  @apply bg-gray-100 font-semibold;
+}
